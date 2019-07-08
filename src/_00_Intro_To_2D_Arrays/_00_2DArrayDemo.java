@@ -19,13 +19,14 @@ public class _00_2DArrayDemo {
 		
 		// Accessing elements of the 2D array works the same as a 1D array
 		anotherArray2d[0][1] = 4;
-		System.out.println(anotherArray2d[0][1]);
+	//	System.out.println(anotherArray2d[0][1]);
 		
 		
 		// Iterating through a 2D array usually involves 2 for loops like this:
 		for(int i = 0; i < newArray2d.length; i++) {
 			for(int j = 0; j < newArray2d[i].length; j++) {
-				System.out.print(newArray2d[i][j]); //printing the elements
+				System.out.println(i+" , "+j+"\n");
+				System.out.print(newArray2d[i][j]+"\n"); //printing the elements
 			}
 			System.out.println(); //for formatting
 		}
