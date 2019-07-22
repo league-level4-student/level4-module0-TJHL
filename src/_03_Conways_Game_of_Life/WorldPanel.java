@@ -2,6 +2,7 @@ package _03_Conways_Game_of_Life;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -31,7 +32,7 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 		this.cellsPerRow = cpr;
 	
 		//2. Calculate the cell size.
-		int cellSize =5;
+		cellSize =w/cpr;
 		//3. Initialize the cell array to the appropriate size.
 		 grid= new Cell[w][h];
 		//3. Iterate through the array and initialize each cell.
@@ -47,13 +48,21 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 	public void randomizeCells() {
 		//4. Iterate through each cell and randomly set each
 		//   cell's isAlive memeber to true of false
-		
+		for (int i = 0; i < grid.length; i++) {
+			for (int j = 0; j < grid.length; j++) {
+				grid[i][j].isAlive=true;
+			}
+		}
 		repaint();
 	}
 	
 	public void clearCells() {
 		//5. Iterate through the cells and set them all to dead.
-		
+		for (int i = 0; i < grid.length; i++) {
+			for (int j = 0; j < grid.length; j++) {
+				grid[i][j].isAlive=false;
+			}
+		}
 		repaint();
 	}
 	
@@ -72,12 +81,15 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 	@Override
 	public void paintComponent(Graphics g) {
 		//6. Iterate through the cells and draw them all
-		
-		
-		
-		// draws grid
-		g.setColor(Color.BLACK);
-		g.drawRect(0, 0, getWidth() - 1, getHeight() - 1);
+		for(int i = 0; i< grid.length; i++) {
+			for (int j = 0; j < grid.length; j++) {
+				grid[i][j].draw(g);
+				
+				//grid "screen door"
+				g.setColor(Color.BLACK);
+				g.drawRect(i*cellSize, j*cellSize, cellSize, cellSize);
+			}
+		}
 	}
 	
 	//advances world one step
@@ -86,6 +98,11 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 		// . using the getLivingNeighbors method.
 		int[][] livingNeighbors = new int[cellsPerRow][cellsPerRow];
 		
+		for (int i = 0; i < grid.length; i++) {
+			for (int j = 0; j < grid.length; j++) {
+				grid[i][j].getLivingNeighbors;
+			}
+		}
 		//8. check if each cell should live or die
 	
 		
