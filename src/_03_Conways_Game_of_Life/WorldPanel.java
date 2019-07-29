@@ -98,15 +98,46 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 		// . using the getLivingNeighbors method.
 		int[][] livingNeighbors = new int[cellsPerRow][cellsPerRow];
 		
-		for (int i = 0; i < grid.length; i++) {
-			for (int j = 0; j < grid.length; j++) {
-				grid[i][j].getLivingNeighbors;
-			}
-		}
-		//8. check if each cell should live or die
+		
+	
+		/*
+		 * 1. Any live cell with fewer than two live nieghbours dies, as if caused by underpopulation.
+		 * 2. Any live cell with two or three live neighbours lives on to the next generation.
+		 * 3. Any live cell with more than three live neighbours dies, as if by overpopulation.
+		 * 4. Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
+		 * (source: Wikipedia)
+		 * */
 	
 		
+		//8. check if each cell should live or die
 		
+		for (int i = 0; i < grid.length; i++) {
+			for (int j = 0; j < grid.length; j++) {
+				
+				if(grid[i][j].isAlive==true) {
+					
+					if(getLivingNeighbors(i,j)<2) {
+						grid[i][j].isAlive=false;
+					}
+					
+					if(getLivingNeighbors(i,j)>2&&getLivingNeighbors(i,j)<3) {
+						grid[i][j].isAlive =true;
+					}
+					
+					if(getLivingNeighbors(i,j)>3) {
+						grid[i][j].isAlive=false;
+					}
+				}
+				
+				if(grid[i][j].isAlive=false) {
+					
+					if(getLivingNeighbors(i,j)==3) {
+						grid[i][j].isAlive =true;
+					}
+				}
+				
+			}
+		}
 		
 		repaint();
 	}
@@ -116,25 +147,29 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 	//   living neighbors there are of the 
 	//   cell identified by x and y
 	public int getLivingNeighbors(int x, int y){
-		return 0;
+		int cellNeighbors=0;
+		for (int i = x-1; i <= x+1; i++) {
+			for (int j = y-1; j <= y+1; j++) {
+				if(grid[i][j].isAlive==true) {
+					cellNeighbors=cellNeighbors+1;
+				}
+			}
+		}
+		if(grid[x][y].isAlive==true) {
+			cellNeighbors=cellNeighbors-1;
+		}
+		System.out.println(cellNeighbors);
+		return cellNeighbors;
 	}
 
 	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-	}
+	public void mouseClicked(MouseEvent e) {}
 
 	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void mouseEntered(MouseEvent e) {}
 
 	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void mouseExited(MouseEvent e) {}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
@@ -142,16 +177,19 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 		//    which cell is clicked. Then toggle
 		//    the isAlive variable for that cell.
 		
+		if(grid[e.getX()/cellSize][e.getY()/cellSize].isAlive==true) {
+			grid[e.getX()/cellSize][e.getY()/cellSize].isAlive=false;
+		}
 		
-		
+		else if(grid[e.getX()/cellSize][e.getY()/cellSize].isAlive==false) {
+			grid[e.getX()/cellSize][e.getY()/cellSize].isAlive=true;
+		}
 		
 		repaint();
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
