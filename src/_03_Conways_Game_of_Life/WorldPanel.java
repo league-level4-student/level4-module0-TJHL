@@ -97,7 +97,11 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 		//7. iterate through cells and fill in the livingNeighbors array
 		// . using the getLivingNeighbors method.
 		int[][] livingNeighbors = new int[cellsPerRow][cellsPerRow];
-		
+		for (int i = 0; i < livingNeighbors.length; i++) {
+			for (int j = 0; j < livingNeighbors.length; j++) {
+				livingNeighbors[i][j]=getLivingNeighbors(i,j);
+			}
+		}
 		
 	
 		/*
@@ -111,34 +115,34 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 		
 		//8. check if each cell should live or die
 		
-		for (int i = 0; i < grid.length; i++) {
+	/*	for (int i = 0; i < grid.length; i++) {
 			for (int j = 0; j < grid.length; j++) {
 				
 				if(grid[i][j].isAlive==true) {
 					
-					if(getLivingNeighbors(i,j)<2) {
+					if(livingNeighbors[i][j]<2) {
 						grid[i][j].isAlive=false;
 					}
 					
-					if(getLivingNeighbors(i,j)>2&&getLivingNeighbors(i,j)<3) {
+					if(livingNeighbors[i][j]>2&&livingNeighbors[i][j]<3) {
 						grid[i][j].isAlive =true;
 					}
 					
-					if(getLivingNeighbors(i,j)>3) {
+					if(livingNeighbors[i][j]>3) {
 						grid[i][j].isAlive=false;
 					}
 				}
 				
 				if(grid[i][j].isAlive=false) {
 					
-					if(getLivingNeighbors(i,j)==3) {
+					if(livingNeighbors[i][j]==3) {
 						grid[i][j].isAlive =true;
 					}
 				}
 				
 			}
 		}
-		
+	*/	
 		repaint();
 	}
 	
@@ -149,16 +153,23 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 	public int getLivingNeighbors(int x, int y){
 		int cellNeighbors=0;
 		for (int i = x-1; i <= x+1; i++) {
-			for (int j = y-1; j <= y+1; j++) {
-				if(grid[i][j].isAlive==true) {
-					cellNeighbors=cellNeighbors+1;
+			if(0<=i && i<=cellsPerRow-1) {
+				for (int j = y-1; j <= y+1; j++) {
+					if(0<=j && j<=cellsPerRow-1) {
+					
+						if(grid[i][j].isAlive==true) {
+							cellNeighbors=cellNeighbors+1;
+							
+						}
+					}	
 				}
 			}
 		}
+		
 		if(grid[x][y].isAlive==true) {
 			cellNeighbors=cellNeighbors-1;
 		}
-		System.out.println(cellNeighbors);
+		System.out.println(x+", "+y+" : "+cellNeighbors);
 		return cellNeighbors;
 	}
 
