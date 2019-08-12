@@ -25,6 +25,9 @@ public class ConwaysGameOfLife extends JPanel implements ActionListener{
 	private JButton clearButton;
 	private JLabel speedLabel;
 	private JTextField speedField;
+	//CUSTOM
+	private JButton fillButton;
+	private JButton toggleButton;
 	
 	private WorldPanel gamePanel;
 	
@@ -45,6 +48,12 @@ public class ConwaysGameOfLife extends JPanel implements ActionListener{
 		startStopButton.addActionListener(this);
 		randomizeButton = new JButton("RANDOMIZE");
 		randomizeButton.addActionListener(this);
+		//CUSTOM
+		fillButton = new JButton("FILL");
+		fillButton.addActionListener(this);
+		toggleButton = new JButton("TOGGLE");
+		toggleButton.addActionListener(this);
+		
 		clearButton = new JButton("CLEAR");
 		clearButton.addActionListener(this);
 		speedLabel = new JLabel("delay:");
@@ -55,7 +64,12 @@ public class ConwaysGameOfLife extends JPanel implements ActionListener{
 		inputPanel.add(speedLabel);
 		inputPanel.add(speedField);
 		inputPanel.add(randomizeButton);
+		//CUSTOM
+		inputPanel.add(fillButton);
+		inputPanel.add(toggleButton);
+		
 		inputPanel.add(clearButton);
+		
 		add(inputPanel, BorderLayout.NORTH);
 
 		gamePanel = new WorldPanel(WIDTH, HEIGHT, CELLS_PER_ROW);
@@ -93,5 +107,12 @@ public class ConwaysGameOfLife extends JPanel implements ActionListener{
 		}else if(e.getSource() == clearButton) {
 			gamePanel.clearCells();
 		}
+		//CUSTOM
+		else if(e.getSource() == fillButton) {
+			gamePanel.fillCells();
+		}	
+		else if(e.getSource() == toggleButton) {
+			gamePanel.toggleCells();
+		}	
 	}
 }

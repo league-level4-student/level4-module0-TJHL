@@ -34,7 +34,7 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 		//2. Calculate the cell size.
 		cellSize =w/cpr;
 		//3. Initialize the cell array to the appropriate size.
-		 grid= new Cell[w][h];
+		 grid= new Cell[cpr][cpr];
 		//3. Iterate through the array and initialize each cell.
 		//   Don't forget to consider the cell's dimensions when 
 		//   passing in the location.
@@ -50,7 +50,37 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 		//   cell's isAlive memeber to true of false
 		for (int i = 0; i < grid.length; i++) {
 			for (int j = 0; j < grid.length; j++) {
+				int random= new Random().nextInt(2);
+					if(random==1) {
+						grid[i][j].isAlive=true;
+					}
+					if(random==0) {
+						grid[i][j].isAlive=false;
+					}
+				
+			}
+		}
+		repaint();
+	}
+	
+	public void fillCells() {
+		for (int i = 0; i < grid.length; i++) {
+			for (int j = 0; j < grid.length; j++) {
 				grid[i][j].isAlive=true;
+			}
+		}
+		repaint();
+	}
+	
+	public void toggleCells() {
+		for (int i = 0; i < grid.length; i++) {
+			for (int j = 0; j < grid.length; j++) {
+				if(grid[i][j].isAlive==true) {
+					grid[i][j].isAlive=false;
+				}
+				else if(grid[i][j].isAlive==false) {
+					grid[i][j].isAlive=true;
+				}
 			}
 		}
 		repaint();
@@ -103,46 +133,17 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 			}
 		}
 		
-	
-		/*
-		 * 1. Any live cell with fewer than two live nieghbours dies, as if caused by underpopulation.
-		 * 2. Any live cell with two or three live neighbours lives on to the next generation.
-		 * 3. Any live cell with more than three live neighbours dies, as if by overpopulation.
-		 * 4. Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
-		 * (source: Wikipedia)
-		 * */
-	
-		
 		//8. check if each cell should live or die
-		
-	/*	for (int i = 0; i < grid.length; i++) {
-			for (int j = 0; j < grid.length; j++) {
+	
+		//Don't know if right or wrong
+		for (int i = 0; i < grid.length; i++) {
+			for (int j = 0; j < grid[0].length; j++) {
 				
-				if(grid[i][j].isAlive==true) {
-					
-					if(livingNeighbors[i][j]<2) {
-						grid[i][j].isAlive=false;
-					}
-					
-					if(livingNeighbors[i][j]>2&&livingNeighbors[i][j]<3) {
-						grid[i][j].isAlive =true;
-					}
-					
-					if(livingNeighbors[i][j]>3) {
-						grid[i][j].isAlive=false;
-					}
-				}
-				
-				if(grid[i][j].isAlive=false) {
-					
-					if(livingNeighbors[i][j]==3) {
-						grid[i][j].isAlive =true;
-					}
-				}
+				grid[i][j].liveOrDie(livingNeighbors[i][j]);	
 				
 			}
 		}
-	*/	
+		
 		repaint();
 	}
 	
@@ -169,7 +170,7 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 		if(grid[x][y].isAlive==true) {
 			cellNeighbors=cellNeighbors-1;
 		}
-		System.out.println(x+", "+y+" : "+cellNeighbors);
+		
 		return cellNeighbors;
 	}
 
